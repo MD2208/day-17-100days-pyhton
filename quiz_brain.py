@@ -7,11 +7,8 @@ class QuizBrain:
     def next_question(self):
         current_question = self.question_list[self.question_number]
         self.question_number+=1 
-        user_answer = input(f"Q.{self.question_number}: {current_question.text} (True or False ?): ")
-        self.check_answer(user_answer,current_question.answer)
-        
-    
-        
+        self.correct_answer = current_question.answer
+        return f"Q.{self.question_number}: {current_question.text}"  
 
     def still_has_questions(self):
         if self.question_number>=len(self.question_list):
@@ -20,9 +17,9 @@ class QuizBrain:
         else:
             return True
         
-    def check_answer(self,user_answer,correct_answer):
-        if user_answer.lower() == correct_answer.lower():
+    def check_answer(self,user_answer):
+        if user_answer.lower() == self.correct_answer.lower():
             self.score+=1
-            print(f"You're right! Your current score is {self.score}/{self.question_number}.")
+            return True
         else:
-            print(f"You're wrong, the correct answer is {correct_answer}, and your current score is {self.score}/{self.question_number}.")
+            return False
